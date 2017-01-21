@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem "foreman"
 gem "sinatra", require: 'sinatra/base'
 gem "sinatra-contrib"
 gem "sinatra-activerecord", :require => 'sinatra/activerecord'
