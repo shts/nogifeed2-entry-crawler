@@ -5,5 +5,4 @@ database.yml
 test*.rb
 tmp/*
 setup.rb
-salvage.rb
 .env
