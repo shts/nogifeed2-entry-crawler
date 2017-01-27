@@ -90,7 +90,6 @@ end
 
 #get_all_entry
 
-=begin
 # TODO:新着を記事を監視する
 EM.run do
   EM::PeriodicTimer.new(60) do
@@ -101,7 +100,10 @@ EM.run do
     puts "routine work finish !!!"
   end
 end
+=begin
+Api::Member.all.each do |m|
+  XMLParser.parse(m['rss_url']) { |published, url|
+    fetch(published, url, true) if Api::Entry.where('url = ?', url).first == nil
+  }
+end
 =end
-XMLParser.parse("http://blog.nogizaka46.com/atom.xml") { |published, url|
-  fetch(published, url, true) if Api::Entry.where('url = ?', url).first == nil
-}
