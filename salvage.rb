@@ -63,7 +63,7 @@ Api::Entry.all.each do |e|
   # 403対策
   sleep 5
 
-  s = fetch e['url']
+  s = fetch e
   if s == nil then
     puts "published is nil"
   else
