@@ -78,7 +78,7 @@ puts "published->#{e['published']}"
                     "_uploaded_raw_image_urls" => e['uploaded_raw_image_urls'],
                     "_uploaded_thumbnail_urls" => e['uploaded_thumbnail_urls'],
                     "_member_id" => e['member_id'],
-                    "_published" => e['published'],
+                    "_published2" => e['published2'],
                     "_member_name" => e.member['name_main'],
                     "_member_image_url" => e.member['image_url']
         }

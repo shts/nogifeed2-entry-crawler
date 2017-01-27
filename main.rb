@@ -51,7 +51,7 @@ def save_and_push d
   e['original_thumbnail_urls'] = d[:thumbnail_url_arr]
   e['uploaded_raw_image_urls'] = d[:uploaded_raw_image_url]
   e['uploaded_thumbnail_urls'] = d[:uploaded_thumbnail_url]
-  e['published'] = d[:published]
+  e['published2'] = d[:published]
   Push.new.push_entry e if e.save
 end
 

@@ -60,21 +60,25 @@ end
 
 
 Api::Entry.all.each do |e|
-  # 403対策
-  sleep 5
+  if e['published2'].present? == false then
+    # 403対策
+    sleep 10
 
-  s = fetch e
-  if s == nil then
-    puts "published is nil"
-  else
-    d = DateTime.parse s
-    puts d
-    if d == nil then
-      puts "d is nil -> #{e['url']}"
+    s = fetch e
+    if s == nil then
+      puts "published is nil-> #{e['url']}"
     else
-      e['published2'] = d
-      e.save
+      d = DateTime.parse s
+      puts d
+      if d == nil then
+        puts "d is nil -> #{e['url']}"
+      else
+        e['published2'] = d
+        e.save
+      end
     end
+  else
+    puts "already have published2 -> #{e['url']}"
   end
 end
 
