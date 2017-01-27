@@ -11,6 +11,7 @@ require_relative 'tables'
 require_relative 'pusher'
 require_relative 'uploader'
 require 'date'
+require 'open-uri'
 
 def log text
 =begin
