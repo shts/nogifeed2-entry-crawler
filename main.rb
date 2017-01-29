@@ -52,6 +52,7 @@ def save_and_push d
   e['uploaded_raw_image_urls'] = d[:uploaded_raw_image_url]
   e['uploaded_thumbnail_urls'] = d[:uploaded_thumbnail_url]
   e['published2'] = d[:published]
+  #e.save
   Push.new.push_entry e if e.save
 end
 
@@ -91,6 +92,7 @@ end
 #get_all_entry
 
 # TODO:新着を記事を監視する
+=begin
 EM.run do
   EM::PeriodicTimer.new(60) do
     puts "routine work start..."
@@ -100,10 +102,15 @@ EM.run do
     puts "routine work finish !!!"
   end
 end
-=begin
-Api::Member.all.each do |m|
-  XMLParser.parse(m['rss_url']) { |published, url|
-    fetch(published, url, true) if Api::Entry.where('url = ?', url).first == nil
-  }
-end
 =end
+EM.run do
+  EM::PeriodicTimer.new(60) do
+    puts "routine work start..."
+    Api::Member.all.each do |m|
+      XMLParser.parse(m['rss_url']) { |published, url|
+        fetch(published, url, true) if Api::Entry.where('url = ?', url).first == nil
+      }
+    end
+    puts "routine work finish !!!"
+  end
+end
