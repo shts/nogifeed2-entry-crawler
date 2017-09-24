@@ -41,4 +41,7 @@ module Api
 
   class Fcm < ActiveRecord::Base
   end
+
+  class Banner < ActiveRecord::Base
+  end
 end

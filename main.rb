@@ -6,6 +6,7 @@ require 'eventmachine'
 # データベースにアクセスするためのライブラリを読み込む
 #require 'sinatra/activerecord'
 
+require_relative 'banner'
 require_relative 'htmlparser'
 require_relative 'downloader'
 #require_relative 'parseapiclient'
@@ -73,6 +74,18 @@ def get_all_entry
   end
 end
 
+def save_banners d
+  banner = Api::Banner.where('linkurl = ?', d[:linkurl]).first
+  if banner == nil
+    e = Api::Banner.new
+    e['title'] = d[:title]
+    e['thumurl'] = d[:thumurl]
+    e['bnrurl'] = d[:bnrurl]
+    e['linkurl'] = d[:linkurl]
+    e.save
+  end
+end
+
 # TODO:過去の記事のURLすべてを取得する
 #url_arr = Crawler.past_entry_url
 #url_arr.each do |url|
@@ -105,12 +118,21 @@ end
 =end
 EM.run do
   EM::PeriodicTimer.new(60) do
-    puts "routine work start..."
+    puts "routine work blog crawl start..."
     Api::Member.all.each do |m|
       XMLParser.parse(m['rss_url']) { |published, url|
         fetch(published, url, true) if Api::Entry.where('url = ?', url).first == nil
       }
     end
-    puts "routine work finish !!!"
+    puts "routine work blog crawl finish !!!"
+  end
+
+  EM::PeriodicTimer.new(60 * 60) do
+    puts "routine work banner crawl start..."
+    banner = Banner.new
+    banner.parse { |data|
+      save_banners data
+    }
+    puts "routine work banner crawl finish !!!"
   end
 end
