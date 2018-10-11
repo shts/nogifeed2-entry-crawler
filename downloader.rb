@@ -59,11 +59,15 @@ class Downloader
 
         FileUtils.mkdir_p(Dirname) unless FileTest.exist?(Dirname)
 
-        open(file_path, 'wb') do |output|
-          open(valid_url, cookie) do |data|
-            output.write(data.read)
-            yield(url, file_name)
+        begin
+          open(file_path, 'wb') do |output|
+            open(valid_url, cookie) do |data|
+              output.write(data.read)
+              yield(url, file_name)
+            end
           end
+        rescue
+          puts "Failed to download file. url(#{valid_url})"
         end
       }
       counter = counter + 1
